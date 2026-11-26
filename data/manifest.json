@@ -1,0 +1,59 @@
+{
+  "dataset_id": "phoenix-ohlc-proof-20240108-v1",
+  "generated_at_utc": "2026-11-24T20:56:39.340700+00:00",
+  "timeframe": "M1",
+  "day_rome": "2024-01-08",
+  "interval_rome": {
+    "start_inclusive": "2024-01-08T00:00:00+01:00",
+    "end_exclusive": "2024-01-09T00:00:00+01:00"
+  },
+  "timestamp_meaning": "candle opening time",
+  "canonical_timezone": "UTC",
+  "display_timezone": "Europe/Rome",
+  "clock_contract": "FPTRADING_NY_CLOSE_HISTORY_NORMALIZED_20261024",
+  "prices": "Decimal strings: original canonical OHLC, no rounding or resampling.",
+  "quote_basis": "Canonical Phoenix source OHLC. Separate bid/ask, spread and ticks are not supplied.",
+  "tick_volume": "Source tick count, not traded monetary volume.",
+  "missing_policy": "Missing calendar minutes are listed, never filled. Cause not inferred from absence.",
+  "integrity_scope": "This two-symbol day only. No claim about integrity or availability of other history.",
+  "pip_size": {
+    "EURUSD": "0.0001",
+    "GBPUSD": "0.0001"
+  },
+  "symbols": {
+    "EURUSD": {
+      "data_url": "/data/EURUSD-2024-01-08.json",
+      "row_count": 1434,
+      "sha256": "65f2fbac1d9bb2aad8c9d4501aa6ffa3c1344ac545f0c21f9a60d72bf9b785af",
+      "bytes": 325844,
+      "first_utc": "2024-01-07T23:00:00Z",
+      "last_utc": "2024-01-08T22:59:00Z",
+      "calendar_minutes": 1440,
+      "missing_calendar_minutes_rome": [
+        "2024-01-08T05:33:00+01:00",
+        "2024-01-08T06:29:00+01:00",
+        "2024-01-08T07:19:00+01:00",
+        "2024-01-08T23:03:00+01:00",
+        "2024-01-08T23:12:00+01:00",
+        "2024-01-08T23:13:00+01:00"
+      ],
+      "duplicate_timestamps": 0,
+      "invalid_ohlc": 0
+    },
+    "GBPUSD": {
+      "data_url": "/data/GBPUSD-2024-01-08.json",
+      "row_count": 1438,
+      "sha256": "351c00e17216d4155b9f741ce6543b47df2f413a5aee4181be6dc451edf0cfa5",
+      "bytes": 326661,
+      "first_utc": "2024-01-07T23:00:00Z",
+      "last_utc": "2024-01-08T22:59:00Z",
+      "calendar_minutes": 1440,
+      "missing_calendar_minutes_rome": [
+        "2024-01-08T23:20:00+01:00",
+        "2024-01-08T23:21:00+01:00"
+      ],
+      "duplicate_timestamps": 0,
+      "invalid_ohlc": 0
+    }
+  }
+}
