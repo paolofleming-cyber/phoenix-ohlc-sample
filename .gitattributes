@@ -1,3 +1,5 @@
 *.json -text
+*.gz -text
 *.md text eol=lf
+*.txt text eol=lf
 .gitattributes text eol=lf

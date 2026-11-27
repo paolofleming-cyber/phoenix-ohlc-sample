@@ -1,0 +1,55 @@
+ACQUISIZIONE E TEST DELLO STORICO PHOENIX
+
+Repository: https://github.com/paolofleming-cyber/phoenix-ohlc-sample
+Ramo dello storico completo: history-m1-20261127
+
+1. Clonare in sola lettura nel proprio ambiente. Per periodi selezionati e' possibile
+   usare --depth 1 --filter=blob:none --no-checkout --single-branch --branch history-m1-20261127.
+   Il ramo main conserva il campione precedente: non usarlo per lo storico completo.
+   Non usare LFS, API GitHub o accesso in scrittura. Se il proxy rifiuta l'accesso,
+   riferire l'errore senza modificarlo o aggirarlo.
+
+2. Fissare il commit fornito dall'utente o, se non fornito, risolvere HEAD una volta
+   e riportarne lo SHA. Tutte le letture devono usare quello stesso commit.
+   Leggere i byte con git show COMMIT:manifest.json, catturando stdout in binario
+   in Python. Il manifest sotto data/ e' SOLO quello del vecchio campione.
+
+3. Il manifest alla radice elenca mesi e cross realmente presenti. Selezionare i
+   mesi Roma che intersecano il periodo richiesto, senza ridurre silenziosamente
+   l'intervallo o il numero di cross. Riportare eventuali parti non disponibili.
+
+4. Per ciascun file usare git show COMMIT:PERCORSO, calcolare SHA-256 e dimensione
+   sui byte gzip e confrontarli con sha256 e bytes. Solo dopo, gzip.decompress e
+   controllo di uncompressed_sha256 e uncompressed_bytes. Qualsiasi discordanza
+   deve interrompere il test, non diventare soltanto un messaggio informativo.
+   Verificare nello stesso modo coverage/CROSS.json.gz.
+
+5. Leggere il CSV con csv.DictReader e i prezzi con Decimal. Verificare righe,
+   ordine crescente, duplicati, OHLC validi, intervallo e corrispondenza tra
+   time_utc e time_rome. Il pip e' 0.0001. Il timestamp e' l'apertura della candela.
+
+6. Convertire UTC in Europe/Rome con zoneinfo. Non applicare offset MT4 aggiuntivi
+   e non usare UTC+1/UTC+2 fissi. Calcolare i minuti attesi come differenza UTC
+   tra gli estremi locali del periodo: i giorni Roma possono durare 23/24/25 ore.
+   Nel giorno del ritorno all'ora solare distinguere le due ore ripetute tramite
+   offset o UTC. Rendere esplicito il trattamento di orari locali ambigui/inesistenti.
+
+7. Le coperture si riferiscono ai minuti DI CALENDARIO, inclusi weekend e chiusure:
+   non interpretare automaticamente gli assenti come dati corrotti o festivita'.
+   Il 27/11/2026 e' valutato solo fino alle 08:32 Roma escluse; i minuti successivi
+   non sono buchi. Non riempire assenze, non creare candele sintetiche e non
+   intersecare automaticamente le serie dei tre cross.
+
+8. Prima del backtest definire una politica esplicita per finestre incomplete.
+   Contare e riportare quelle escluse o non valutabili, con denominatori per cross.
+   Una mancanza nel box d'ingresso e una nel seguito dell'operazione hanno effetti
+   diversi: dichiarare entrambe. Non eliminare giorni in base all'esito del trade.
+
+9. OHLC M1 non contiene spread, bid/ask separati o ordine dei prezzi intrabar.
+   Se stop e target sono entrambi toccati nella stessa candela, dichiarare
+   l'ambiguita' o applicare una regola prudenziale esplicita. Costi e slippage
+   eventualmente simulati sono ipotesi, non misure contenute in questo archivio.
+
+10. Consegnare codice, commit, hash, periodi, righe lette e copertura, distinguendo
+    calcoli eseguiti da dichiarazioni del manifest. Marialuisa non deve scaricare
+    o allegare i file dal telefono: acquisizione e calcoli avvengono nell'ambiente AI.
